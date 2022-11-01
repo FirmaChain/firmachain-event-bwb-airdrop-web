@@ -1,13 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './default.css';
 
-import { MainContainer, ContentsContainer, Logo, TitleText, SubText, StoreImageButton, Description } from './styles';
+import {
+  MainContainer,
+  ContentsContainer,
+  Logo,
+  TitleText,
+  SubText,
+  StoreImageButton,
+  DescriptionSub,
+  Description,
+} from './styles';
 
 const App = () => {
+  const [isExpired, setExpired] = useState(false);
+
   useEffect(() => {
     setTimeout(() => {
-      exeDeepLink();
+      // exeDeepLink();
     }, 1000);
   }, []);
 
@@ -15,8 +26,12 @@ const App = () => {
     axios
       .get(`${process.env.REACT_APP_API_HOST}/airdrop`)
       .then((response) => {
-        const url = response.data.result.qrcode;
-        window.location.href = url;
+        if (response.data.result.qrcode.includes('EXPIRED') === false) {
+          const url = response.data.result.qrcode;
+          window.location.href = url;
+        } else {
+          setExpired(true);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -40,6 +55,7 @@ const App = () => {
             (window.location.href = 'https://play.google.com/store/apps/details?id=com.firma_station_mobile')
           }
         />
+        <DescriptionSub>{'The airdrop event has officially ended.\n2022-10-27 ~ 2022-10-29'}</DescriptionSub>
       </ContentsContainer>
     </MainContainer>
   );

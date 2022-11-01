@@ -111,3 +111,13 @@ export const Description = styled.div`
   line-height: 24px;
   padding: 0 30px;
 `;
+
+export const DescriptionSub = styled.div`
+  font-size: 1.4rem;
+  color: #888;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  line-height: 24px;
+  padding: 0 30px;
+  white-space: pre-wrap;
+`;
